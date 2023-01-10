@@ -1,0 +1,54 @@
+{
+    "threat": {
+        "category": "User-Defined",
+        "description": "https://attack.mitre.org/techniques/T1036/003/\nhttps://tria.ge/230110-v3r11sgg49/behavioral1\nhttps://twitter.com/k3dg3/status/1612868248151724072",
+        "display_name": "T1036_003 - Rename System Utilities - Rundll32",
+        "name": "T1036_003 - Rename System Utilities - Rundll32",
+        "operating_system_name": "windows",
+        "script": {
+            "0": {
+                "conf": "--cp 127.0.0.1:443 --multipart 10240 --secure true",
+                "module": "https",
+                "type": "initialization"
+            },
+            "1": {
+                "module": "loader",
+                "module_to_load": "run",
+                "request": "--load run",
+                "type": "message"
+            },
+            "2": {
+                "depends_on": "93b6b9cf-78d2-45ee-a174-08290fdf73db",
+                "module": "run",
+                "request": "cmd.exe /c copy /y C:\\Windows\\System32\\rundll32.exe cmVhpKJSis23S.exe",
+                "rtags": [
+                    "att&ck-technique:T1036.003",
+                    "sigma:suspicious copy from or to system32"
+                ],
+                "type": "message"
+            },
+            "3": {
+                "depends_on": "93b6b9cf-78d2-45ee-a174-08290fdf73db",
+                "module": "run",
+                "request": "cmVhpKJSis23S.exe",
+                "rtags": [
+                    "att&ck-technique:T1036.003",
+                    "sigma:renamed rundll32.exe execution",
+                    "sigma:highly relevant renamed binary",
+                    "sigma:renamed binary"
+                ],
+                "type": "message"
+            },
+            "4": {
+                "depends_on": "93b6b9cf-78d2-45ee-a174-08290fdf73db",
+                "module": "run",
+                "request": "cmd.exe /c del cmVhpKJSis23S.exe",
+                "type": "message"
+            }
+        },
+        "signature": "3ce1cbeedb097e1a0c3b83ebdd6c955a7433cf29",
+        "tags": [
+            "att&ck-technique:T1036.003"
+        ]
+    }
+}
